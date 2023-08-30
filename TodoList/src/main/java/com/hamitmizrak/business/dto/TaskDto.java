@@ -22,9 +22,9 @@ public class TaskDto extends AuditingAwareBaseDto implements Serializable {
     public static final Long serialVersionUID=1L;
 
     private Long taskId;
-    private String taskTitle;
+    private String taskName;
     private boolean taskCompleted;
-    private Date taskDate=new Date(System.currentTimeMillis());
+    //private Date taskDate=new Date(System.currentTimeMillis());
 
 
 

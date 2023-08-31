@@ -1,44 +1,77 @@
-import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+// REACT
+import React, { useEffect, useState } from 'react'
+
+// LANGUAGE
+import { withTranslation } from 'react-i18next'
+
+// ROUTER 
+import { useNavigate } from 'react-router-dom'
+
+// API
 import TaskApi from '../../services/TaskApi';
 
+// FUNCTION
 function TaskCreate({ t }) {
+
+  // REDIRECT
   const navigate = useNavigate();
+
+  // STATE
   const [taskName, setTaskName] = useState('');
-  const [taskCompleted, setTaskCompleted] = useState(false);
   const [error, setError] = useState();
 
+  // Dinleyiciler 
+  // categoryName her hangi bir değişiklik olduğunda error silinsin
   useEffect(() => {
-    setError(undefined);
-  }, [taskName, taskCompleted]);
+    setError(undefined)
+  }, [taskName]);
 
+
+  // CREATE
   const taskCreate = async (event) => {
+    // Browser'ın post için durmasını istiyorum
     event.preventDefault();
 
+    // Category object
     const newTask = {
-      taskName,
-      taskCompleted,
-    };
+      taskName
+    }
+    console.log(newTask);
 
     setError(undefined);
-
+    // API
     try {
       const response = await TaskApi.taskApiCreate(newTask);
-      navigate('/task/list');
     } catch (err) {
+      //  if (err.code === '404') {
+      //   setCategoryName(err.response.data.validationErrors);
+      //   return
+      // }
+      //setError(err.response.data.message);
       setError(err.response.data.validationErrors);
     }
-  };
+    // CategoryApi.categoryApiCreate(newCategory).then((response) => {
+    //   if (response.status === 200) {
+    //     navigate('/category/list');
+    //   }
+    // })
+    // .catch((err) => {
+    //   console.error(err);
+    // });
+  }
 
-  const handleTaskNameChange = (event) => {
-    setTaskName(event.target.value);
-  };
 
-  const handleTaskCompletedChange = (event) => {
-    setTaskCompleted(event.target.checked);
-  };
+  // CHANGE
+  const taskOnChange = (event) => {
+    const { name, value } = event.target;
+    //console.log(`${name} => ${value}`);
 
+    // onChange
+    setTaskName(value)
+  }
+
+
+  // RETURN
   return (
     <React.Fragment>
       <form>
@@ -51,40 +84,26 @@ function TaskCreate({ t }) {
             placeholder={t('task_name')}
             required={true}
             autoFocus={true}
-            id="task_name"
-            name="task_name"
-            value={taskName}
-            onChange={handleTaskNameChange}
+            id="task_data"
+            name="task_data"
+            onChange={taskOnChange}
+          //onChange={(event)=>{setCategoryName(event.target.value)}}
           />
-          {error && error.taskName && (
-            <div className="alert alert-danger" role="alert">
-              {error.taskName}
-            </div>
-          )}
-        </div>
-        <div className="form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="task_completed"
-            name="task_completed"
-            checked={taskCompleted}
-            onChange={handleTaskCompletedChange}
-          />
-          <label className="form-check-label" htmlFor="task_completed">
-            {t('task_completed')}
-          </label>
+          {/* state hatayı bootstrap ile alert ekrana basma */}
+          {error ? <div className="alert alert-danger" role="alert">
+            {error.taskName}
+          </div> : ""}
         </div>
         <button
-          type="submit"
+          type='submit'
           className="btn btn-primary mt-3"
-          onClick={taskCreate}
-        >
-          {t('create')}
-        </button>
+          disabled={!true}
+          onClick={taskCreate}>{t('create')}</button>
       </form>
+      <br /><br /><br /><br /><br /><br /><br /><br />
     </React.Fragment>
-  );
-}
+  ) //end return
+} //end fucntion
 
-export default withTranslation()(TaskCreate);
+// i18n wrapper
+export default withTranslation()(TaskCreate)

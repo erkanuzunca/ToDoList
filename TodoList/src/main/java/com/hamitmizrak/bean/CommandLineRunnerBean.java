@@ -60,6 +60,7 @@ public class CommandLineRunnerBean {
         return randomData;
     }
 
+
     // Blog Create
     public void blogCreate(Integer categoryNumber) {
         Iterable<CategoryEntity> iterableCategoryEntityList = iCategoryRepository.findAll();
@@ -80,6 +81,7 @@ public class CommandLineRunnerBean {
         }
     }
 
+
     @Bean
     public CommandLineRunner blogCommandLineRunnerMethod() {
         return args -> {
@@ -90,4 +92,15 @@ public class CommandLineRunnerBean {
             blogCreate(0);
         };
     }
+
+
+
+
+
+
+
+
+
+
+
 }

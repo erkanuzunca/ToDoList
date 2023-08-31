@@ -1,4 +1,3 @@
-
 // rcc
 import React, { Component } from 'react'
 
@@ -53,7 +52,7 @@ class Header extends Component {
             <React.Fragment>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                     <div className="container">
-                        <Link className="navbar-brand" to="category/list"> <i className={this.props.logo}></i></Link>
+                        <Link className="navbar-brand" to="task/list"> <i className={this.props.logo}></i></Link>
                         <button
                             className="navbar-toggler d-lg-none"
                             type="button"

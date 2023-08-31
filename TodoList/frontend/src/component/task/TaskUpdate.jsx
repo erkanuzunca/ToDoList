@@ -1,90 +1,95 @@
-import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+
+// REACT
+import React, { useEffect, useState } from 'react'
+
+// LANGUAGE
+import { withTranslation } from 'react-i18next'
+
+// ROUTER 
+import { useNavigate, useParams } from 'react-router-dom'
+
+// API
 import TaskApi from '../../services/TaskApi';
 
-function TaskUpdate({ t }) {
-  const navigate = useNavigate();
+
+// FUNCTION
+ function TaskUpdate({t}) {
+
+  // REDIRECT
+  const navigate=useNavigate();
+
+  // STATE
   const [taskName, setTaskName] = useState('');
-  const [taskCompleted, setTaskCompleted] = useState(false);
-  const [id, setId] = useState(null);
+  const [id, setID] = useState(null);
 
-  const { taskId } = useParams();
+  // PARAMS
+    const updateID = useParams();
+  
+  // USEEFFECT
+    useEffect(() => {
+      //1.YOL (ID)
+      //setID(localStorage.getItem("category_update_id"));
+      setID(updateID.id);
 
-  useEffect(() => {
-    setId(taskId);
-
-    TaskApi.taskApiFindById(taskId)
+      //FIND
+      TaskApi.taskApiFindById(updateID.id)
       .then((response) => {
-        const taskData = response.data;
-        setTaskName(taskData.taskName);
-        setTaskCompleted(taskData.taskCompleted);
+        console.log(response.data);
+        setTaskName(response.data.taskName)
       })
-      .catch((error) => {
-        console.error(error);
+      .catch((err) => {
+        console.error(err);
       });
-  }, [taskId]);
+    },[])//end effect
+  
 
-  const handleUpdateTask = async (event) => {
+  // POST
+  const taskUpdate= async (event)=>{
+    // Browser'ın post için durmasını istiyorum
     event.preventDefault();
 
-    const updatedTask = {
-      taskName,
-      taskCompleted,
-    };
+    // Category object
+    const newTask={
+      taskName
+    }
+    console.log(newTask);
 
-    try {
-      const response = await TaskApi.taskApiUpdate(id, updatedTask);
-      if (response.status === 200) {
+    // API
+   try {
+      const response= await TaskApi.taskApiUpdate(id,newTask)
+      if (response.status===200){
         navigate('/task/list');
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+   } catch (err) {
+    console.error(err);
+   }
+  }
 
+  // RETURN
   return (
     <React.Fragment>
       <form>
         <h2 className="display-3 mt-4">{t('task_update')}</h2>
         <div className="form-group">
           <span>{t('task_name')}</span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder={t('task_name')}
-            required={true}
-            autoFocus={true}
-            id="task_name"
-            name="task_name"
-            value={taskName}
-            onChange={(event) => setTaskName(event.target.value)}
+          <input 
+          type="text" 
+          className="form-control" 
+          placeholder={t('task_name')} 
+          required={true}
+          autoFocus={true}
+          id="task_data"
+          name="task_data"
+          onChange={(event)=>{setTaskName(event.target.value)}}
+          value={taskName}
           />
-        </div>
-        <div className="form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="task_completed"
-            name="task_completed"
-            checked={taskCompleted}
-            onChange={(event) => setTaskCompleted(event.target.checked)}
-          />
-          <label className="form-check-label" htmlFor="task_completed">
-            {t('task_completed')}
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary mt-3"
-          onClick={handleUpdateTask}
-        >
-          {t('update')}
-        </button>
+          </div>
+          <button type='submit' className="btn btn-primary mt-3" onClick={taskUpdate}>{t('update')}</button>
       </form>
       <br /><br /><br /><br /><br /><br /><br /><br />
     </React.Fragment>
-  );
-}
+  ) //end return
+} //end fucntion
 
-export default withTranslation()(TaskUpdate);
+// i18n wrapper
+export default withTranslation()(TaskUpdate)

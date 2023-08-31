@@ -1,32 +1,49 @@
+// AXIOS
 import axios from "axios";
 
-const CATEGORY_URL = "/category/api/v1";
+// Persist URL 
+const TASK_URL = "/task/api/v1"
 
-class CategoryApi {
+// CLASS API
+class TaskApi {
+
     // CREATE
-    categoryApiCreate(categoryDto) {
-        return axios.post(`${CATEGORY_URL}/create`, categoryDto);
-    }
+    // http://localhost:4444/category/api/v1/create
+    // @PostMapping("/create")</CategoryDto>
+    taskApiCreate(taskDto) {
+        return axios.post(`${TASK_URL}/create`, taskDto)
+    };
 
     // LIST
-    categoryApiList() {
-        return axios.get(`${CATEGORY_URL}/list`);
+    // @GetMapping(value="/list")
+    // http://localhost:4444/category/api/v1/list
+    taskApiList() {
+        return axios.get(`${TASK_URL}/list`)
     }
 
     // FIND
-    categoryApiFindById(id) {
-        return axios.get(`${CATEGORY_URL}/find/${id}`);
+    // http://localhost:4444/category/api/v1/find/1
+    //@GetMapping(value="/find/{id}")
+    taskApiFindById(id) {
+        return axios.get(`${TASK_URL}/find/${id}`)
     }
 
     // UPDATE
-    categoryApiUpdate(id, categoryDto) {
-        return axios.put(`${CATEGORY_URL}/update/${id}`, categoryDto);
+    // http://localhost:4444/category/api/v1/update/1
+    //@PutMapping(value="/update/{id}")
+    taskApiUpdate(id, taskDto) {
+        return axios.put(`${TASK_URL}/update/${id}`, taskDto)
     }
 
     // DELETE BY ID
-    categoryApiDeleteById(id) {
-        return axios.delete(`${CATEGORY_URL}/delete/${id}`);
+    // http://localhost:4444/category/api/v1/delete/1
+    //@DeleteMapping(value="/delete/{id}")
+    taskApiDeleteById(id) {
+        return axios.delete(`${TASK_URL}/delete/${id}`)
     }
-}
 
-export default new CategoryApi();
+} //end class
+const instance = new TaskApi();
+
+export default instance;
+

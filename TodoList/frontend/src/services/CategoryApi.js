@@ -43,5 +43,7 @@ class CategoryApi {
     }
 
 } //end class
+const instance = new CategoryApi();
 
-export default new CategoryApi();
+export default instance;
+

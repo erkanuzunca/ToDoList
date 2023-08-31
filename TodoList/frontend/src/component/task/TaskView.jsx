@@ -1,33 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import TaskApi from '../../services/TaskApi';
+//import axios from 'axios';
+
 import moon from "../../img/moon.jpg";
 
+// FUNCTION
 export default function TaskView() {
-  const navigate = useNavigate();
-  const [viewTask, setViewTask] = useState({});
-  const { taskId } = useParams();
 
+  // REDIRECT
+  let navigate = useNavigate();
+
+  // STATE
+  const [viewApi, setViewApi] = useState([]);
+  const [id, setID] = useState(null);
+
+  // PARAMS
+  const viewID = useParams();
+
+  // EFFECT
   useEffect(() => {
-    TaskApi.taskApiFindById(taskId)
+    //1.YOL (ID)
+    setID(localStorage.getItem("task_view_id"));
+    //CategoryApi.categoryApiFindById(localStorage.getItem("category_view_id"))
+      TaskApi.taskApiFindById(viewID.id)
+      //axios.get(`http://localhost:4444/category/api/v1/find/${id}`)
+      //axios.get(`http://localhost:4444/category/api/v1/find/${viewID.id}`)
       .then((response) => {
-        setViewTask(response.data);
+        console.log(response.data);
+        setViewApi(response.data)
       })
-      .catch((error) => {
-        console.error(error);
+      .catch((err) => {
+        console.error(err);
       });
-  }, [taskId]);
+  },[])//end effect
 
   return (
     <div>
-      <div className="card">
-        <div className="card-body text-center">
-          <img src={moon} alt="" style={{ maxWidth: "75%" }} />
-          <h5 className="card-title">{viewTask.taskId}</h5>
-          <p className="card-title">{viewTask.taskName}</p>
-          <p className="card-text">{viewTask.taskCompleted ? "Completed" : "Not Completed"}</p>
+      <div class="card">
+        <div class="card-body text-center">
+        <img src={moon} alt="" style={{maxWidth:"75%"}} />
+          <h5 class="card-title"> {viewApi.id}</h5>
+          <p class="card-title"> {viewApi.taskName}</p>
+          <p class="card-text">  {viewApi.systemDate}</p>
         </div>
       </div>
     </div>
-  );
+  )
 }

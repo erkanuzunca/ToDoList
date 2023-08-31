@@ -44,26 +44,35 @@ import TaskApi from '../../services/TaskApi';
   
 
   // POST
-  const taskUpdate= async (event)=>{
-    // Browser'ın post için durmasını istiyorum
+  const taskUpdate = async (event) => {
     event.preventDefault();
-
-    // Category object
-    const newTask={
-      taskName
-    }
-    console.log(newTask);
-
-    // API
-   try {
-      const response= await TaskApi.taskApiUpdate(id,newTask)
-      if (response.status===200){
+  
+    const newTask = {
+      taskName,
+      taskCompleted: false // Burada varsayılan olarak false değeri atanmıştır
+    };
+  
+    try {
+      const response = await TaskApi.taskApiUpdate(id, newTask);
+      if (response.status === 200) {
         navigate('/task/list');
       }
-   } catch (err) {
-    console.error(err);
-   }
-  }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+
+
+  
+
+
+
+
+
+
+
 
   // RETURN
   return (

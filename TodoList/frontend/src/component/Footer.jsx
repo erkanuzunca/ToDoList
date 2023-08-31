@@ -40,7 +40,7 @@ class Footer extends Component {
                         style={{ backgroundColor: "rgba(0, 0, 0, 0.9)" }}
                     >
                         {this.props.copy}
-                        <a className="text-dark" href="https://"
+                        <a className="text-white" href="https://"
                             style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
                             Blog
                         </a>

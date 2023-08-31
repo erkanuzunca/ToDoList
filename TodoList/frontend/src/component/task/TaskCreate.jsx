@@ -39,10 +39,15 @@ function TaskCreate({ t }) {
     console.log(newTask);
 
     setError(undefined);
+
+
+
+    
     // API
     try {
       const response = await TaskApi.taskApiCreate(newTask);
     } catch (err) {
+      
       //  if (err.code === '404') {
       //   setCategoryName(err.response.data.validationErrors);
       //   return
@@ -100,7 +105,7 @@ function TaskCreate({ t }) {
           disabled={!true}
           onClick={taskCreate}>{t('create')}</button>
       </form>
-      <br /><br /><br /><br /><br /><br /><br /><br />
+      <br />
     </React.Fragment>
   ) //end return
 } //end fucntion

@@ -35,6 +35,8 @@ class TaskApi {
         return axios.put(`${TASK_URL}/update/${id}`, taskDto)
     }
 
+  
+
     // DELETE BY ID
     // http://localhost:4444/category/api/v1/delete/1
     //@DeleteMapping(value="/delete/{id}")

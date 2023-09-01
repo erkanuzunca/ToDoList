@@ -9,6 +9,11 @@ import { useNavigate } from 'react-router-dom'
 
 // API
 import TaskApi from '../../services/TaskApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faBook); // Eklemek istediğiniz ikonları burada ekleyin
 
 // FUNCTION
 function TaskCreate({ t }) {
@@ -70,35 +75,46 @@ function TaskCreate({ t }) {
   // RETURN
   return (
     <React.Fragment>
-     <form>
-  <h2 className="display-3 mt-4">{t('')}</h2>
-  <div className="form-group">
-    <span>{t('')}</span>
-    <input
-      type="text"
-      className="form-control"
-      placeholder={t('New Todo')}
-      required={true}
-      autoFocus={true}
-      id="task_data"
-      name="task_data"
-      onChange={taskOnChange}
-    />
-    {/* state hatayı bootstrap ile alert ekrana basma */}
-    {error ? <div className="alert alert-danger" role="alert">
-      {error.taskName}
-    </div> : ""}
-  </div>
-  <button
-    type='submit'
-    className="btn btn-primary mt-3 text-center ml-auto btn-block"
-    style={{ width: "100%", fontSize: "1rem" }} // Butonun boyutu ve yazı font büyüklüğü ayarları
-    disabled={!true}
-    onClick={taskCreate}
-  >
-    {t('Add new task')}
-  </button>
-</form>
+<div className="form-container" style={{ padding: "7px", borderRadius: "10px", marginRight: "2px", border: "0.5px solid rgba(0, 0, 0, 0.1)" }}>
+  <form>
+    <h2 className="display-3 mt-4">{t('')}</h2>
+    <div className="form-group d-flex align-items-center">
+      <span style={{ backgroundColor: "#2ca0be", padding: "7px", borderRadius: "1px", marginRight: "0px" }}>
+        <FontAwesomeIcon icon="book" style={{ color: "white" }} />
+      </span>
+      <input
+        type="text"
+        className="form-control"
+        placeholder={t('New Todo')}
+        required={true}
+        autoFocus={true}
+        id="task_data"
+        name="task_data"
+        onChange={taskOnChange}
+      />
+    </div>
+    <button
+      type='submit'
+      className="btn btn-primary mt-3 text-center ml-auto btn-block"
+      style={{
+        backgroundColor: '#2ca0be',
+        color: 'white',
+        width: "100%",
+        fontSize: "1rem",
+        borderRadius: "1px",
+        padding: "7px",
+        marginTop: "10px"
+        
+      }}
+      disabled={!true}
+      onClick={taskCreate}
+    >
+      {t('Add new task')}
+    </button>
+   
+  </form>
+  <br></br>
+</div>
       <br />
     </React.Fragment>
   ) //end return

@@ -187,30 +187,33 @@ function TaskList({ t, i18n, props }) {
   </button>
 </div>
 
-      <table className="table table-striped table-hover table-responsive">
-        <tbody>
-          {TaskStateApi.map((data) => (
-            <tr key={data.id}>
-              <td style={data.completed ? { textDecoration: 'line-through', color: 'red' } : {}}>
-                {data.taskName}
-              </td>
-              <td className="p-0">
-                <input type="checkbox" checked={data.completed} onChange={() => handleCheckboxChange(data.id)} />
-              </td>
-              <td className="p-0">
-                <Link to={`/task/update/${data.id}`}>
-                  <i onClick={() => setUpdateTask(data)} className="fas fa-pencil-alt text-warning text-primary"></i>
-                </Link>
-              </td>
-              <td className="p-0">
-                <Link to={`/task/delete}`}>
-                  <i onClick={() => setDeleteTask(data.id)} className="fa-solid fa-trash text-danger"></i>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+
+
+<table className="table table-hover table-responsive" style={{ padding: "7px", borderRadius: "10px", boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.1)",marginBottom: "20px"  }}>
+  <tbody>
+    {TaskStateApi.map((data, index) => (
+      <tr  key={data.id}  >
+        <td  style={data.completed ? { textDecoration: 'line-through', color: 'red' } : {}}>
+          {data.taskName}
+        </td>
+        <td className="p-0 ">
+          <input  type="checkbox" checked={data.completed} onChange={() => handleCheckboxChange(data.id)} />
+        </td>
+        <td className="p-0">
+          <Link to={`/task/update/${data.id}`}>
+            <i onClick={() => setUpdateTask(data)} className="fas fa-pencil-alt text-warning text-primary"></i>
+          </Link>
+        </td>
+        <td className="p-0">
+          <Link to={`/task/delete}`}>
+            <i onClick={() => setDeleteTask(data.id)} className="fa-solid fa-trash text-danger"></i>
+          </Link>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
  
       <div className="d-flex justify-content-center my-4">
         <button

@@ -103,7 +103,10 @@ function TaskCreate({ t }) {
         fontSize: "1rem",
         borderRadius: "1px",
         padding: "7px",
-        marginTop: "10px"
+        marginTop: "10px",
+        border: "none", // Butonun çerçevesini kaldırır
+        outline: "none", // Odak çerçevesini kaldırır
+        borderRadius: "5px"
         
       }}
       disabled={!true}

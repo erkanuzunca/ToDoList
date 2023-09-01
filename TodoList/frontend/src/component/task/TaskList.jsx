@@ -185,6 +185,53 @@ useEffect(() => {
 
 
 
+//DELETE ALL TASKS
+const taskApiDeleteAll = async () => {
+  try {
+    // Tüm görevleri listeleme işlemi
+    const response = await TaskApi.taskApiList();
+    const tasks = response.data;
+
+    // Tüm görevleri sırayla silme işlemi
+    for (const task of tasks) {
+      await TaskApi.taskApiDeleteById(task.id);
+    }
+
+    // Silme işlemi başarılı olduysa 
+    alert('Tüm görevler başarıyla silindi.');
+    window.location.reload();
+  } catch (error) {
+    console.error('Tüm görevler silinirken bir hata oluştu:', error);
+    // Hata durumunda kullanıcıya bir hata mesajı
+    alert('Görevleri silerken bir hata oluştu. Lütfen tekrar deneyin.');
+  }
+};
+
+
+//COMPLETED TASK DELETE
+const handleDeleteCheckedTasks = async () => {
+  try {
+    // Tamamlanmış görevleri filtreleme işlemi
+    const completedTasks = TaskStateApi.filter(task => task.completed);
+
+    // Tamamlanmış görevleri sırayla silme işlemi
+    for (const task of completedTasks) {
+      await TaskApi.taskApiDeleteById(task.id);
+    }
+
+    // Silme işlemi başarılı olduysa 
+    alert('Seçili tamamlanmış görevler başarıyla silindi.');
+
+    // Sayfayı yeniden yükle
+    window.location.reload();
+  } catch (error) {
+    console.error('Seçili tamamlanmış görevler silinirken bir hata oluştu:', error);
+    // Hata durumunda kullanıcıya bir hata mesajı 
+    alert('Seçili tamamlanmış görevleri silerken bir hata oluştu. Lütfen tekrar deneyin.');
+  }
+};
+
+
 
 
 
@@ -214,54 +261,60 @@ useEffect(() => {
     
       
       <table className="table table-striped table-hover table-responsive">
-        <thead>
-          <tr>
-            <th>{t('id')}</th>
-            <th>{t("task_name")}</th>
-            <th>{t("date")}</th>
-            <th>{t("checkhed")}</th>
-            <th>{t("update")}</th>
-            <th>{t("view")}</th>
-            <th>{t("delete")}</th>
-          </tr>
-        </thead>
+    
         <tbody>
           {
               TaskStateApi.map((data) =>
               <tr key={data.id}>
-                <td>{data.id}</td>
+                
                 <td style={data.completed ? { textDecoration: 'line-through', color: 'red' } : {}}>{data.taskName}</td>
-                <td>{data.systemDate}</td>
-                <td><input type="checkbox" checked={data.completed} onChange={() => handleCheckboxChange(data.id)} /></td>
+                
+                <td className="p-0"><input type="checkbox" checked={data.completed} onChange={() => handleCheckboxChange(data.id)} /></td>
  
 
 
                 
-         
+
         
 
-                <td>
-                  <Link to={`/task/update/${data.id}`}>
-                    <i onClick={() => setUpdateTask(data)} className="fa-solid fa-pen-to-square text-primary"></i>
-                  </Link>
-                </td>
+                <td className="p-0">
+  <Link to={`/task/update/${data.id}`}>
+    <i onClick={() => setUpdateTask(data)} className="fas fa-pencil-alt text-warning text-primary"></i>
+  </Link>
+</td>
 
-                <td>
-                  <Link to={`/task/view/${data.id}`}>
-                    <i onClick={() => setViewTask(data.id)} className="fa-solid fa-expand text-warning"></i>
-                  </Link>
-                </td>
 
-                <td>
-                  <Link to={`/task/delete}`}>
-                    <i onClick={() => setDeleteTask(data.id)} className="fa-solid fa-trash text-danger"></i>
-                  </Link>
-                </td>
+
+<td className="p-0">
+  <Link to={`/task/delete}`}>
+    <i onClick={() => setDeleteTask(data.id)} className="fa-solid fa-trash text-danger"></i>
+  </Link>
+</td>
               </tr>
             )
           }
         </tbody>
+        
       </table>
+ 
+      <div className="d-flex justify-content-center my-4">
+  <button
+    type="button"
+    className="btn btn-danger mx-3 w-100"
+    onClick={taskApiDeleteAll}
+  >
+    Delete All Tasks
+  </button>
+  <button
+    type="button"
+    className="btn btn-danger mx-3 w-100"
+    onClick={handleDeleteCheckedTasks}
+  >
+    Delete Completed Tasks
+  </button>
+</div>
+
+      <br></br> <br></br> <br></br>
     </React.Fragment>
   )
 }

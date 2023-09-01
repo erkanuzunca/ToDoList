@@ -33,20 +33,8 @@ class Footer extends Component {
         //RETURN
         return (
             <React.Fragment>
-                <footer className="bg-light text-center text-lg-start fixed-bottom">
-                    {/* Copyright */}
-                    <div
-                        className="text-center p-3 footer_class"
-                        style={{ backgroundColor: "rgba(0, 0, 0, 0.9)" }}
-                    >
-                        {this.props.copy}
-                        <a className="text-white" href="https://"
-                            style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
-                            Blog
-                        </a>
-                    </div>
-                    {/* Copyright */}
-                </footer>
+               
+                
 
             </React.Fragment>
         ) //end return

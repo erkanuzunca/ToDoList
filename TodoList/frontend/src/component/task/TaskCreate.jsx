@@ -28,41 +28,32 @@ function TaskCreate({ t }) {
 
 
   // CREATE
+
+
+
+
+
+
   const taskCreate = async (event) => {
     // Browser'ın post için durmasını istiyorum
     event.preventDefault();
-
+    navigate("/task/list");
     // Category object
     const newTask = {
       taskName
     }
     console.log(newTask);
-
+  
     setError(undefined);
-
-
-
-    
+  
     // API
     try {
       const response = await TaskApi.taskApiCreate(newTask);
+      // Veri girişi başarılı oldu, şimdi sayfayı yenileyin
+      window.location.reload();
     } catch (err) {
-      
-      //  if (err.code === '404') {
-      //   setCategoryName(err.response.data.validationErrors);
-      //   return
-      // }
-      //setError(err.response.data.message);
       setError(err.response.data.validationErrors);
     }
-    // CategoryApi.categoryApiCreate(newCategory).then((response) => {
-    //   if (response.status === 200) {
-    //     navigate('/category/list');
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.error(err);
-    // });
   }
 
 
@@ -79,32 +70,35 @@ function TaskCreate({ t }) {
   // RETURN
   return (
     <React.Fragment>
-      <form>
-        <h2 className="display-3 mt-4">{t('task_name')}</h2>
-        <div className="form-group">
-          <span>{t('task_name')}</span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder={t('task_name')}
-            required={true}
-            autoFocus={true}
-            id="task_data"
-            name="task_data"
-            onChange={taskOnChange}
-          //onChange={(event)=>{setCategoryName(event.target.value)}}
-          />
-          {/* state hatayı bootstrap ile alert ekrana basma */}
-          {error ? <div className="alert alert-danger" role="alert">
-            {error.taskName}
-          </div> : ""}
-        </div>
-        <button
-          type='submit'
-          className="btn btn-primary mt-3"
-          disabled={!true}
-          onClick={taskCreate}>{t('create')}</button>
-      </form>
+     <form>
+  <h2 className="display-3 mt-4">{t('')}</h2>
+  <div className="form-group">
+    <span>{t('')}</span>
+    <input
+      type="text"
+      className="form-control"
+      placeholder={t('New Todo')}
+      required={true}
+      autoFocus={true}
+      id="task_data"
+      name="task_data"
+      onChange={taskOnChange}
+    />
+    {/* state hatayı bootstrap ile alert ekrana basma */}
+    {error ? <div className="alert alert-danger" role="alert">
+      {error.taskName}
+    </div> : ""}
+  </div>
+  <button
+    type='submit'
+    className="btn btn-primary mt-3 text-center ml-auto btn-block"
+    style={{ width: "100%", fontSize: "1rem" }} // Butonun boyutu ve yazı font büyüklüğü ayarları
+    disabled={!true}
+    onClick={taskCreate}
+  >
+    {t('Add new task')}
+  </button>
+</form>
       <br />
     </React.Fragment>
   ) //end return
